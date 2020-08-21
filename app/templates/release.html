@@ -4,12 +4,18 @@
 
 {% block strona %}
 
-<div class="d-flex justify-content-center">
-    <div class="card" style="width: 18rem;">
+<div class="d-flex justify-content-left">
+    <div class="card" style="width: 100%; height: 100%;">
         <img class="card-img-top" src="{{ img_url }}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">{{ artist }}</h5>
-            <p class="card-text">{{ title }} ({{ year }})</p>
+            <h4 class="card-title">{{ artist }}</h4>
+            <h5 class="card-text">{{ title }} ({{ year }})</h5>
+            <hr>
+            <ol>
+            {% for track in tracks %}
+                <li>{{ track }}</li>
+            {% endfor %}
+            </ol>
         </div>
     </div>
 </div>

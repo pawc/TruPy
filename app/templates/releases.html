@@ -4,20 +4,31 @@
 
 {% block strona %}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-8">
-                <p><input type="text" class="form-control" id="artistName" placeholder="search by artist"/></p>
+    <div class="container-fluid main-wrapper">
+        <div class="row h-100">
+
+            <div class="col-4">
+                <p><input type="text" class="form-control" id="artistName" placeholder="search artist"/></p>
                 <div>
-                    <ul id="releases">
-                    </ul>
+                    <table class="table table-hover" id="results">
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col-4 embed-responsive embed-responsive-1by1" >
-                <iframe id="releasePreview" class="embed-responsive-item"
-                        src="getRelease/?id=670664&output=embed" allowfullscreen>
+
+            <div class="col-4 embed-responsive embed-responsive-1by1">
+                <iframe id="artistPreview" class="embed-responsive-item"
+                    src="getArtist/?id=1439605&output=embed" allowfullscreen>
                 </iframe>
             </div>
+
+            <div class="col-4 embed-responsive embed-responsive-1by1">
+                <iframe id="releasePreview" class="embed-responsive-item"
+                    src="getRelease/?id=670664&output=embed" allowfullscreen>
+                </iframe>
+            </div>
+
         </div>
     </div>
 
