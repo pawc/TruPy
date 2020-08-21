@@ -5,9 +5,10 @@ $(document).ready(function() {
 });
 
 function getReleases(){
+    $('#artistName').attr('disabled', 'disabled');
     var artist = $('#artistName').val();
     $.ajax({
-        url: '/trupy/getReleases',
+        url: 'getReleases',
         data: {
             artist : artist
         }
@@ -19,9 +20,21 @@ function getReleases(){
         }
         else{
             $.each(response, (i, release) => {
-                $("#releases").append('<li>'+release+'</li>');
+                $("#releases").append('<li><a href="#" onclick="loadIframe('+release.id+')">'+release.title+'</a></li>');
             })
         }
+        $('#artistName').removeAttr('disabled');
 
     })
 }
+
+function loadIframe(id) {
+    url = 'getRelease/?id='+id
+    var $iframe = $('#releasePreview');
+    if ( $iframe.length ) {
+        $iframe.attr('src',url);
+        return false;
+    }
+    return true;
+}
+

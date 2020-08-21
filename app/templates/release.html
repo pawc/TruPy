@@ -1,0 +1,17 @@
+{% extends 'embed.html' %}
+
+{% block title %} Release {% endblock %}
+
+{% block strona %}
+
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ img_url }}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ artist }}</h5>
+            <p class="card-text">{{ title }} ({{ year }})</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

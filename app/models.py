@@ -5,3 +5,4 @@ class Release(models.Model):
     artist = models.CharField(max_length=64)
     title = models.CharField(max_length=128)
     year = models.PositiveIntegerField
+    label = models.CharField(max_length=64)

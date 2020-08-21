@@ -1,0 +1,25 @@
+{% extends 'menu.html' %}
+
+{% block title %} TruPy {% endblock %}
+
+{% block strona %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8">
+                <p><input type="text" class="form-control" id="artistName" placeholder="search by artist"/></p>
+                <div>
+                    <ul id="releases">
+                    </ul>
+                </div>
+            </div>
+            <div class="col-4 embed-responsive embed-responsive-1by1" >
+                <iframe id="releasePreview" class="embed-responsive-item"
+                        src="getRelease/?id=670664&output=embed" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
