@@ -1,11 +1,11 @@
+from django.http import JsonResponse
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import render
-from.music import get_releases
+from .music import get_releases
 
-# Create your views here.
-def releases(request):
-    releases = get_releases('Porcupine Tree')
-    return render(request, 'index.html', {
-        'releases': releases
-    })
+def index(request):
+    return render(request, 'index.html');
+
+def getReleases(request):
+    artist = request.GET.get('artist')
+    releases = get_releases(artist)
+    return JsonResponse(releases, safe=False)
