@@ -4,29 +4,60 @@
 
 {% block menu %}
 
-    <nav class="navbar navbar-expand-sm bg-light navbar-light">
-      <a class="navbar-brand" href="#">TruPy</a>
+    <nav class="navbar navbar-expand-lg bg-light navbar-light">
+        <a class="navbar-brand" href="#">pawc-py.azurewebsites.net</a>
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Browse</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Fav</a>
+                        <a class="dropdown-item" href="#">Shelf</a>
+                        <a class="dropdown-item" href="#">Wishlist</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </div>
+                </li>
 
-      <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="#">Browse</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Fav</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Shelf</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Wishlist</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Users</a>
-        </li>
-         <li class="nav-item">
-            <a class="nav-link" href="#">Trade</a>
-        </li>
-      </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Community
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Users</a>
+                        <a class="dropdown-item" href="#">Trade</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Login
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="formContent">
+
+                        <form>
+                            <input type="text" id="login" class="" name="login" placeholder="login">
+                            <input type="text" id="password" class="" name="password" placeholder="password">
+                            <input type="submit" class="" value="Log In">
+                        </form>
+
+                        </div>
+                    </div>
+                </li>
+                 <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Trade</a>
+                </li> -->
+            </ul>
+        </div>
+
     </nav>
 
     {% block strona %} {% endblock %}
