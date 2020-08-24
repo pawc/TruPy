@@ -2,6 +2,15 @@ $(document).ready(function() {
     $('#artistName').keyup(function(e){
         if(e.keyCode == 13) getArtists();
     });
+    $('#logout').click(() => {
+        $.ajax({
+            type: 'POST',
+            url: '/logout/'
+        })
+        .then(() => {
+            location.reload();
+        })
+    })
 });
 
 function getArtists(){

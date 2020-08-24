@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import log_in
+from .views import log_in, log_out
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('trupy/', include('app.urls')),
-    path('login/', log_in)
+    path('login/', log_in),
+    path('logout/', log_out)
 ]

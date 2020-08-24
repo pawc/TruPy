@@ -1,10 +1,13 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from .music import get_releases, get_release, get_artist, get_artists, get_releases_by_artistId
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 def index(request):
-    return render(request, 'releases.html');
+    return render(request, 'releases.html', {
+        'username': request.user.username,
+        'is_authenticated': request.user.is_authenticated
+    })
 
 def getReleases(request):
     artist = request.GET.get('artist')

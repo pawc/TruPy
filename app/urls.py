@@ -1,5 +1,6 @@
 from django.urls import path, include
-from .views import index, getReleases, getRelease, getArtist, getArtists, getReleasesByArtistId
+from .views import index, getReleases, getRelease, \
+    getArtist, getArtists, getReleasesByArtistId
 
 urlpatterns = [
     path('', index),
