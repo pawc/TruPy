@@ -1,8 +1,13 @@
 $(document).ready(function() {
-    loadingDiv(false)
+
+    loadingDiv(false, 'loadingDivBrowse')
+    loadingDiv(false, 'loadingDivArtist')
+    loadingDiv(false, 'loadingDivRecord')
+
     $('#artistName').keyup(function(e){
         if(e.keyCode == 13) getArtists();
     });
+
     $('#logout').click(() => {
         $.ajax({
             type: 'POST',
@@ -12,10 +17,13 @@ $(document).ready(function() {
             location.reload();
         })
     })
+
+    setArtist(1439605)
+    setRecord(670664)
 });
 
 function getArtists(){
-    loadingDiv(true);
+    loadingDiv(true, 'loadingDivBrowse');
     var artist = $('#artistName').val();
     $.ajax({
         url: 'getArtists',
@@ -35,56 +43,15 @@ function getArtists(){
             })
             $("#results").append("</tbody>")
         }
-        loadingDiv(false)
+        loadingDiv(false, 'loadingDivBrowse')
     })
-}
-
-function getReleases(){
-    loadingDiv(true)
-    var artist = $('#artistName').val();
-    $.ajax({
-        url: 'getReleases',
-        data: {
-            artist : artist
-        }
-    })
-    .then(response => {
-        $("#releases").empty();
-        if(response.length == 0){
-            $("#releases").append('Nie znaleziono wyników :(');
-        }
-        else{
-            $("#releases").append("<tbody>")
-            $.each(response, (i, release) => {
-                $("#releases").append('<tr><td><a href="#" onclick="loadIframe('+release.id+')">'+release.title+'</a></td></tr>');
-            })
-            $("#releases").append("</tbody>")
-        }
-        loadingDiv(false)
-    })
-}
-
-function loadIframe(id, type) {
-    var $iframe
-    if(type == 1){
-        url = 'getRelease/?id='+id
-        $iframe = $('#releasePreview');
-    }
-    else{
-        url = 'getArtist/?id='+id
-        $iframe = $('#artistPreview');
-    }
-    if ( $iframe.length ) {
-        $iframe.attr('src',url);
-        return false;
-    }
-    return true;
 }
 
 function chooseArtist(artistId){
-    loadingDiv(true)
+    loadingDiv(true, 'loadingDivBrowse')
+    setArtist(artistId)
     $("#results").empty();
-    loadIframe(artistId, 2)
+
     $.ajax({
         url: 'getReleasesByArtistsId',
         data: {
@@ -98,21 +65,61 @@ function chooseArtist(artistId){
         else{
             $("#results").append("<tbody>")
             $.each(releases, (i, release) => {
-                $("#results").append('<tr><td><a href="#" onclick="loadIframe('+release.id+', 1)">'+release.title+'</a></td></tr>');
+                $("#results").append('<tr><td><a href="#" onclick="setRecord('+release.id+')">'+release.title+'</a></td></tr>');
             })
             $("#results").append("</tbody>")
         }
-        loadingDiv(false)
+        loadingDiv(false, 'loadingDivBrowse')
     })
 }
 
-function loadingDiv(isOn){
+function loadingDiv(isOn, loadingDivId){
     if(isOn){
         $('#artistName').attr('disabled', 'disabled');
-        $('#loadingDiv').show();
+        $('#'+loadingDivId).show();
     }
     else{
         $('#artistName').removeAttr('disabled');
-        $('#loadingDiv').hide();
+        $('#'+loadingDivId).hide();
     }
+}
+
+function setArtist(id){
+    loadingDiv(true, 'loadingDivArtist')
+    $.ajax({
+        url: 'getArtist',
+        data: {
+            id : id
+        }
+    })
+    .then(artist => {
+        $('#artistName').val(artist.name)
+        $('#artistTitle').text(artist.name)
+        $('#artistProfile').text(artist.profile)
+        $('#artistImg').attr('src', artist.img_url);
+        loadingDiv(false, 'loadingDivArtist')
+    })
+
+}
+
+function setRecord(id){
+    loadingDiv(true, 'loadingDivRecord')
+    $.ajax({
+        url: 'getRecord',
+        data: {
+            id : id
+        }
+    })
+    .then(record => {
+        $('#recordTitle').text(record.title + ' (' + record.year + ') ')
+        $('#recordImg').attr('src', record.img_url);
+
+        $('#recordTracks').empty()
+        $.each(record.tracks, (i, track) => {
+            $('#recordTracks').append('<li>'+track+'</li>')
+        })
+
+        loadingDiv(false, 'loadingDivRecord')
+    })
+
 }

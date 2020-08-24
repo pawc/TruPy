@@ -11,7 +11,7 @@
                 <div class="row">
                     <input type="text" class="form-control" id="artistName" placeholder="search artist"/>
                 </div>
-                <div class="row alert alert-light" style="margin: auto; display: table;" role="alert" id="loadingDiv">
+                <div class="row alert alert-light" style="margin: auto; display: table;" role="alert" id="loadingDivBrowse">
                     data loading ... &nbsp;
                     <div class="spinner-border spinner-border-sm" role="status"></div>
                 </div>
@@ -24,16 +24,12 @@
                 </div>
             </div>
 
-            <div class="col-4 embed-responsive embed-responsive-1by1">
-                <iframe id="artistPreview" class="embed-responsive-item"
-                    src="getArtist/?id=1439605&output=embed" allowfullscreen>
-                </iframe>
+            <div class="col-4">
+                {% include 'artist.html' %}
             </div>
 
-            <div class="col-4 embed-responsive embed-responsive-1by1">
-                <iframe id="releasePreview" class="embed-responsive-item"
-                    src="getRelease/?id=670664&output=embed" allowfullscreen>
-                </iframe>
+            <div class="col-4">
+                {% include 'record.html' %}
             </div>
 
         </div>

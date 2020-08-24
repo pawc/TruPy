@@ -31,7 +31,7 @@ def get_releases(artist):
 
     return releases
 
-def get_release(id):
+def get_record(id):
     consumer_key = config.consumer_key
     consumer_secret = config.consumer_secret
     oauth_token = config.oauth_token
@@ -83,7 +83,9 @@ def get_artist(id):
 
     name = result.name
     profile = result.profile
-    img_url = result.images[0].get('resource_url')
+    img_url = None
+    if result.images is not None and len(result.images) > 0:
+        img_url = result.images[0].get('resource_url')
 
     return {
         'name': name,

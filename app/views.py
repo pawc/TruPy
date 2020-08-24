@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from .music import get_releases, get_release, get_artist, get_artists, get_releases_by_artistId
+from .music import get_releases, get_record, get_artist, get_artists, get_releases_by_artistId
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 def index(request):
@@ -25,24 +25,13 @@ def getArtists(request):
     return JsonResponse(artists, safe=False)
 
 @xframe_options_exempt
-def getRelease(request):
+def getRecord(request):
     id = request.GET.get('id')
-    release = get_release(id)
-    return render(request, 'release.html', {
-        'artist': release.get('artist'),
-        'title': release.get('title'),
-        'year': release.get('year'),
-        'label': release.get('label'),
-        'img_url': release.get('img_url'),
-        'tracks': release.get('tracks')
-    })
+    record = get_record(id)
+    return JsonResponse(record, safe=False)
 
 @xframe_options_exempt
 def getArtist(request):
     id = request.GET.get('id')
     artist = get_artist(id)
-    return render(request, 'artist.html', {
-        'name': artist.get('name'),
-        'profile': artist.get('profile'),
-        'img_url': artist.get('img_url')
-    })
+    return JsonResponse(artist, safe=False)
