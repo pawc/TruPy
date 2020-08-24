@@ -8,7 +8,14 @@
         <div class="row">
 
             <div class="col-4 main-wrapper">
-                <p><input type="text" class="form-control" id="artistName" placeholder="search artist"/></p>
+                <div class="row">
+                    <input type="text" class="form-control" id="artistName" placeholder="search artist"/>
+                </div>
+                <div class="row alert alert-light" style="margin: auto; display: table;" role="alert" id="loadingDiv">
+                    data loading ... &nbsp;
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                </div>
+
                 <div class="">
                     <table class="table table-hover" id="results">
                         <tbody>

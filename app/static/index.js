@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    loadingDiv(false)
     $('#artistName').keyup(function(e){
         if(e.keyCode == 13) getArtists();
     });
@@ -14,7 +15,7 @@ $(document).ready(function() {
 });
 
 function getArtists(){
-    $('#artistName').attr('disabled', 'disabled');
+    loadingDiv(true);
     var artist = $('#artistName').val();
     $.ajax({
         url: 'getArtists',
@@ -34,13 +35,12 @@ function getArtists(){
             })
             $("#results").append("</tbody>")
         }
-        $('#artistName').removeAttr('disabled');
-
+        loadingDiv(false)
     })
 }
 
 function getReleases(){
-    $('#artistName').attr('disabled', 'disabled');
+    loadingDiv(true)
     var artist = $('#artistName').val();
     $.ajax({
         url: 'getReleases',
@@ -60,8 +60,7 @@ function getReleases(){
             })
             $("#releases").append("</tbody>")
         }
-        $('#artistName').removeAttr('disabled');
-
+        loadingDiv(false)
     })
 }
 
@@ -83,6 +82,7 @@ function loadIframe(id, type) {
 }
 
 function chooseArtist(artistId){
+    loadingDiv(true)
     $("#results").empty();
     loadIframe(artistId, 2)
     $.ajax({
@@ -92,7 +92,6 @@ function chooseArtist(artistId){
         }
     })
     .then(releases => {
-
         if(releases.length == 0){
             $("#results").append('Not releases found :(');
         }
@@ -103,9 +102,17 @@ function chooseArtist(artistId){
             })
             $("#results").append("</tbody>")
         }
-        console.log(release)
-
+        loadingDiv(false)
     })
 }
 
-
+function loadingDiv(isOn){
+    if(isOn){
+        $('#artistName').attr('disabled', 'disabled');
+        $('#loadingDiv').show();
+    }
+    else{
+        $('#artistName').removeAttr('disabled');
+        $('#loadingDiv').hide();
+    }
+}
