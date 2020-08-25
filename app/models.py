@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-class Release(models.Model):
-    artist = models.CharField(max_length=64)
-    title = models.CharField(max_length=128)
-    year = models.PositiveIntegerField
-    label = models.CharField(max_length=64)
+class FavRecord(models.Model):
+    recordId = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return str(self.recordId)
+

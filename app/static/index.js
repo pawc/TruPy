@@ -11,7 +11,10 @@ $(document).ready(function() {
     $('#logout').click(() => {
         $.ajax({
             type: 'POST',
-            url: '/logout/'
+            url: '/logout/',
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
         })
         .then(() => {
             location.reload();
@@ -24,6 +27,7 @@ $(document).ready(function() {
     $('#favIcon').click(() => {toggleFav();})
     $('#wishIcon').click(() => {toggleWish();})
     $('#shelfIcon').click(() => {toggleShelf();})
+
 });
 
 function getArtists(){
@@ -117,6 +121,7 @@ function setRecord(id){
     .then(record => {
         $('#recordTitle').text(record.title + ' (' + record.year + ') ')
         $('#recordLabel').text(record.label)
+        $('#favIcon').attr('recordId', id)
 
         if(record.img_url != 'not found'){
             $('#recordImg').attr('src', record.img_url);
@@ -140,6 +145,16 @@ function setRecord(id){
 function toggleFav(){
     $("#favIcon").toggleClass("far");
     $("#favIcon").toggleClass("fas");
+    $.ajax({
+        type: 'POST',
+        url: 'fav/',
+        data: {
+            id: $("#favIcon").attr('recordId')
+        },
+        headers: {
+            "X-CSRFToken": getCookie('csrftoken')
+        }
+    })
 }
 
 function toggleShelf(){
@@ -152,4 +167,19 @@ function toggleShelf(){
 function toggleWish(){
     $("#wishIcon").toggleClass("far");
     $("#wishIcon").toggleClass("fas");
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

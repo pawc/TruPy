@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Release
-# Register your models here.
+from .models import FavRecord
 
-admin.site.register(Release)
+admin.site.register(FavRecord)

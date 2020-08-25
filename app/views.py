@@ -1,7 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import render
 from .music import get_releases, get_record, get_artist, get_artists, get_releases_by_artistId
-from django.views.decorators.clickjacking import xframe_options_exempt
+from .models import FavRecord
 
 def index(request):
     return render(request, 'releases.html', {
@@ -24,14 +24,27 @@ def getArtists(request):
     artists = get_artists(artist)
     return JsonResponse(artists, safe=False)
 
-@xframe_options_exempt
 def getRecord(request):
     id = request.GET.get('id')
     record = get_record(id)
     return JsonResponse(record, safe=False)
 
-@xframe_options_exempt
 def getArtist(request):
     id = request.GET.get('id')
     artist = get_artist(id)
     return JsonResponse(artist, safe=False)
+
+def fav(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        response = HttpResponse()
+        print('uwaga ' + str(id))
+        #try:
+        FavRecord.objects.create(recordId=id, user=request.user)
+        response.status_code = 200
+        #except:
+        #    response.status_code = 500
+
+        return response
+    else:
+        return Http404
