@@ -20,6 +20,10 @@ $(document).ready(function() {
 
     setArtist(1439605)
     setRecord(670664)
+
+    $('#favIcon').click(() => {toggleFav();})
+    $('#wishIcon').click(() => {toggleWish();})
+    $('#shelfIcon').click(() => {toggleShelf();})
 });
 
 function getArtists(){
@@ -112,14 +116,40 @@ function setRecord(id){
     })
     .then(record => {
         $('#recordTitle').text(record.title + ' (' + record.year + ') ')
-        $('#recordImg').attr('src', record.img_url);
+        $('#recordLabel').text(record.label)
+
+        if(record.img_url != 'not found'){
+            $('#recordImg').attr('src', record.img_url);
+        }
+        else{
+            $('#recordImg').removeAttr('src');
+        }
 
         $('#recordTracks').empty()
-        $.each(record.tracks, (i, track) => {
-            $('#recordTracks').append('<li>'+track+'</li>')
-        })
+        if(record.tracks != 'not found'){
+            $.each(record.tracks, (i, track) => {
+                $('#recordTracks').append('<li>'+track+'</li>')
+            })
+        }
 
         loadingDiv(false, 'loadingDivRecord')
     })
 
+}
+
+function toggleFav(){
+    $("#favIcon").toggleClass("far");
+    $("#favIcon").toggleClass("fas");
+}
+
+function toggleShelf(){
+    $("#shelfIcon").toggleClass("far");
+    $("#shelfIcon").toggleClass("fas");
+    $("#shelfIcon").toggleClass("fa-square");
+    $("#shelfIcon").toggleClass("fa-check-square");
+}
+
+function toggleWish(){
+    $("#wishIcon").toggleClass("far");
+    $("#wishIcon").toggleClass("fas");
 }

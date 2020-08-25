@@ -1,5 +1,6 @@
 import discogs_client
 import config
+from discogs_client.exceptions import HTTPError
 
 def get_releases(artist):
     releases = []
@@ -43,29 +44,40 @@ def get_record(id):
     discogsclient.set_consumer_key(consumer_key, consumer_secret)
     discogsclient.set_token(oauth_token, oauth_token_secret)
 
-    masterRelease = discogsclient.master(id)
-    mainRelease = masterRelease.main_release
+    try:
+        masterRelease = discogsclient.master(id)
+        mainRelease = masterRelease.main_release
 
-    artist = mainRelease.artists[0].name
-    title = mainRelease.title
-    year = mainRelease.year
-    label = mainRelease.labels[0].name
-    img_url = mainRelease.images[0].get('resource_url')
-    tracks = []
-    for track in mainRelease.tracklist:
-        if track.duration:
-            tracks.append(track.title + ' (' + track.duration + ')')
-        else:
-            tracks.append(track.title)
+        artist = mainRelease.artists[0].name
+        title = mainRelease.title
+        year = mainRelease.year
+        label = mainRelease.labels[0].name
+        img_url = mainRelease.images[0].get('resource_url')
+        tracks = []
+        for track in mainRelease.tracklist:
+            if track.duration:
+                tracks.append(track.title + ' (' + track.duration + ')')
+            else:
+                tracks.append(track.title)
 
-    return {
-        'artist': artist,
-        'title': title,
-        'year': year,
-        'label': label,
-        'img_url': img_url,
-        'tracks': tracks
-    }
+        return {
+            'artist': artist,
+            'title': title,
+            'year': year,
+            'label': label,
+            'img_url': img_url,
+            'tracks': tracks
+        }
+    except HTTPError:
+        return {
+            'artist': 'not found',
+            'title': 'not found',
+            'year': 'not found',
+            'label': 'not found',
+            'img_url': 'not found',
+            'tracks': 'not found'
+        }
+
 
 def get_artist(id):
     consumer_key = config.consumer_key

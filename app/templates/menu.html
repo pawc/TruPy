@@ -5,14 +5,11 @@
 {% block menu %}
 
 <nav class="navbar navbar-expand-lg bg-light navbar-light">
-    <a class="navbar-brand" href="#">pawc.pl</a>
-    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button> -->
+    <a class="navbar-brand" href="#"><i class="fas fa-compact-disc" style="font-size: 1.5em;"></i></a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">browse</a>
+                <a class="nav-link" href="#">search</a>
             </li>
 
             {% if is_authenticated %}
@@ -22,11 +19,11 @@
                         {{ username }}
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">fav</a>
-                        <a class="dropdown-item" href="#">shelf</a>
-                        <a class="dropdown-item" href="#">wishlist</a>
-                        <a class="dropdown-item" href="#">settings</a>
-                        <a class="dropdown-item" href="#" id="logout">logout</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-heart"></i> fav</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-check-square"></i> shelf</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-list-alt"></i> wishlist</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-sliders-h"></i> settings</a>
+                        <a class="dropdown-item" href="#" id="logout"><i class="fas fa-sign-out-alt"></i> logout</a>
                     </div>
                 </li>
 
@@ -35,8 +32,8 @@
                         community
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">users</a>
-                        <a class="dropdown-item" href="#">trade</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-users"></i> users</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-suitcase"></i> trade</a>
                     </div>
                 </li>
 
