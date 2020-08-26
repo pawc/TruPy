@@ -125,6 +125,8 @@ function setRecord(id){
         $('#recordTitle').text(record.title + ' (' + record.year + ') ')
         $('#recordLabel').text(record.label)
         $('#favIcon').attr('recordId', id)
+        $('#shelfIcon').attr('recordId', id)
+        $('#wishIcon').attr('recordId', id)
 
         if(record.img_url != 'not found'){
             $('#recordImg').attr('src', record.img_url);
@@ -145,6 +147,22 @@ function setRecord(id){
         if((isFavChecked && !isFav) || (!isFavChecked && isFav)){
             $("#favIcon").toggleClass("far");
             $("#favIcon").toggleClass("fas");
+        }
+
+        isShelfChecked = $('#shelfIcon').hasClass('fas')
+        isShelf = record.is_shelf
+        if((isShelfChecked && !isShelf) || (!isShelfChecked && isShelf)){
+            $("#shelfIcon").toggleClass("far");
+            $("#shelfIcon").toggleClass("fas");
+            $("#shelfIcon").toggleClass("fa-square");
+            $("#shelfIcon").toggleClass("fa-check-square");
+        }
+
+        isWishChecked = $('#wishIcon').hasClass('fas')
+        isWish = record.is_wish
+        if((isWishChecked && !isWish) || (!isWishChecked && isWish)){
+            $("#wishIcon").toggleClass("far");
+            $("#wishIcon").toggleClass("fas");
         }
 
         loadingDiv(false, 'loadingDivRecord')
@@ -191,15 +209,82 @@ function toggleFav(){
 }
 
 function toggleShelf(){
-    $("#shelfIcon").toggleClass("far");
-    $("#shelfIcon").toggleClass("fas");
-    $("#shelfIcon").toggleClass("fa-square");
-    $("#shelfIcon").toggleClass("fa-check-square");
+    isShelfChecked = $('#shelfIcon').hasClass('fas')
+
+    if(!isShelfChecked){
+        $.ajax({
+            type: 'POST',
+            url: 'shelf/',
+            data: {
+                id: $("#shelfIcon").attr('recordId')
+            },
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
+        })
+        .then(() => {
+            $("#shelfIcon").toggleClass("far");
+            $("#shelfIcon").toggleClass("fas");
+            $("#shelfIcon").toggleClass("fa-square");
+            $("#shelfIcon").toggleClass("fa-check-square");
+        })
+    }
+    else{
+        $.ajax({
+            type: 'POST',
+            url: 'unshelf/',
+            data: {
+                id: $("#shelfIcon").attr('recordId')
+            },
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
+        })
+        .then(() => {
+            $("#shelfIcon").toggleClass("far");
+            $("#shelfIcon").toggleClass("fas");
+            $("#shelfIcon").toggleClass("fa-square");
+            $("#shelfIcon").toggleClass("fa-check-square");
+        })
+    }
+
 }
 
 function toggleWish(){
-    $("#wishIcon").toggleClass("far");
-    $("#wishIcon").toggleClass("fas");
+    isWishChecked = $('#wishIcon').hasClass('fas')
+
+    if(!isWishChecked){
+        $.ajax({
+            type: 'POST',
+            url: 'wish/',
+            data: {
+                id: $("#wishIcon").attr('recordId')
+            },
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
+        })
+        .then(() => {
+            $("#wishIcon").toggleClass("far");
+            $("#wishIcon").toggleClass("fas");
+        })
+    }
+    else{
+        $.ajax({
+            type: 'POST',
+            url: 'unwish/',
+            data: {
+                id: $("#wishIcon").attr('recordId')
+            },
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
+        })
+        .then(() => {
+            $("#wishIcon").toggleClass("far");
+            $("#wishIcon").toggleClass("fas");
+        })
+    }
 }
 
 function getCookie(name) {

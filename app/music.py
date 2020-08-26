@@ -68,6 +68,8 @@ def get_record(id):
             'img_url': img_url,
             'tracks': tracks,
             'is_fav': False,
+            'is_shelf': False,
+            'is_wish': False,
             'is_user_authenticated': False
         }
     except HTTPError:
@@ -79,6 +81,8 @@ def get_record(id):
             'img_url': 'not found',
             'tracks': 'not found',
             'is_fav': False,
+            'is_shelf': False,
+            'is_wish': False,
             'is_user_authenticated': False
         }
 
