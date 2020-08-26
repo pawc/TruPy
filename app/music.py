@@ -66,7 +66,8 @@ def get_record(id):
             'year': year,
             'label': label,
             'img_url': img_url,
-            'tracks': tracks
+            'tracks': tracks,
+            'is_fav': False
         }
     except HTTPError:
         return {
@@ -75,7 +76,8 @@ def get_record(id):
             'year': 'not found',
             'label': 'not found',
             'img_url': 'not found',
-            'tracks': 'not found'
+            'tracks': 'not found',
+            'is_fav': False
         }
 
 

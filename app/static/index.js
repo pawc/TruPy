@@ -137,24 +137,54 @@ function setRecord(id){
             })
         }
 
+        isFavChecked = $('#favIcon').hasClass('fas')
+        isFav = record.is_fav
+        if((isFavChecked && !isFav) || (!isFavChecked && isFav)){
+            $("#favIcon").toggleClass("far");
+            $("#favIcon").toggleClass("fas");
+        }
+
         loadingDiv(false, 'loadingDivRecord')
     })
 
 }
 
 function toggleFav(){
-    $("#favIcon").toggleClass("far");
-    $("#favIcon").toggleClass("fas");
-    $.ajax({
-        type: 'POST',
-        url: 'fav/',
-        data: {
-            id: $("#favIcon").attr('recordId')
-        },
-        headers: {
-            "X-CSRFToken": getCookie('csrftoken')
-        }
-    })
+    isFavChecked = $('#favIcon').hasClass('fas')
+
+    if(!isFavChecked){
+        $.ajax({
+            type: 'POST',
+            url: 'fav/',
+            data: {
+                id: $("#favIcon").attr('recordId')
+            },
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
+        })
+        .then(() => {
+            $("#favIcon").toggleClass("far");
+            $("#favIcon").toggleClass("fas");
+        })
+    }
+    else{
+        $.ajax({
+            type: 'POST',
+            url: 'unfav/',
+            data: {
+                id: $("#favIcon").attr('recordId')
+            },
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken')
+            }
+        })
+        .then(() => {
+            $("#favIcon").toggleClass("far");
+            $("#favIcon").toggleClass("fas");
+        })
+    }
+
 }
 
 function toggleShelf(){

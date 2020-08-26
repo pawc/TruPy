@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import index, getReleases, getRecord, \
-    getArtist, getArtists, getReleasesByArtistId, fav
+    getArtist, getArtists, getReleasesByArtistId, fav, unfav
 
 urlpatterns = [
     path('', index),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('getRecord/', getRecord),
     path('getArtist/', getArtist),
     path('getArtists/', getArtists),
-    path('fav/', fav)
+    path('fav/', fav),
+    path('unfav/', unfav)
 ]

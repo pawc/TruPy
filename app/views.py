@@ -27,6 +27,10 @@ def getArtists(request):
 def getRecord(request):
     id = request.GET.get('id')
     record = get_record(id)
+    is_fav = False
+    if len(FavRecord.objects.filter(user=request.user, recordId=id)) > 0:
+        is_fav = True
+    record['is_fav'] = is_fav
     return JsonResponse(record, safe=False)
 
 def getArtist(request):
@@ -38,13 +42,19 @@ def fav(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-        print('uwaga ' + str(id))
-        #try:
         FavRecord.objects.create(recordId=id, user=request.user)
         response.status_code = 200
-        #except:
-        #    response.status_code = 500
+        return response
+    else:
+        return Http404
 
+def unfav(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        response = HttpResponse()
+        record = FavRecord.objects.filter(recordId=id, user=request.user)
+        record.delete()
+        response.status_code = 200
         return response
     else:
         return Http404
