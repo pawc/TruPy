@@ -162,7 +162,44 @@ def getFavs(request):
             'artist': record['artist'],
             'artistId': record['artistId'],
             'title': record['title']
+        })
 
+    return JsonResponse(results, safe=False)
+
+def getShelf(request):
+    response = HttpResponse()
+    if not request.user.is_authenticated:
+        response.status_code = 403
+        return response
+
+    shelf = ShelfRecord.objects.filter(user=request.user)
+    results = []
+    for s in shelf:
+        record = get_record(s.recordId)
+        results.append({
+            'recordId': s.recordId,
+            'artist': record['artist'],
+            'artistId': record['artistId'],
+            'title': record['title']
+        })
+
+    return JsonResponse(results, safe=False)
+
+def getWish(request):
+    response = HttpResponse()
+    if not request.user.is_authenticated:
+        response.status_code = 403
+        return response
+
+    wishes = WishRecord.objects.filter(user=request.user)
+    results = []
+    for wish in wishes:
+        record = get_record(wish.recordId)
+        results.append({
+            'recordId': wish.recordId,
+            'artist': record['artist'],
+            'artistId': record['artistId'],
+            'title': record['title']
         })
 
     return JsonResponse(results, safe=False)

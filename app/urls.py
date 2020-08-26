@@ -1,11 +1,13 @@
 from django.urls import path
-from .views import index, getFavs, getRecord, \
+from .views import index, getFavs, getShelf, getWish, getRecord, \
     getArtist, getArtists, getReleasesByArtistId, fav, unfav, \
     shelf, unshelf, wish, unwish
 
 urlpatterns = [
     path('', index),
     path('getFavs', getFavs),
+    path('getShelf', getShelf),
+    path('getWish', getWish),
     path('getReleasesByArtistsId/', getReleasesByArtistId),
     path('getRecord/', getRecord),
     path('getArtist/', getArtist),

@@ -3,6 +3,9 @@ $(document).ready(function() {
     loadingDiv(false, 'loadingDivBrowse')
     loadingDiv(false, 'loadingDivArtist')
     loadingDiv(false, 'loadingDivRecord')
+    $('#favDiv').hide();
+    $('#shelfDiv').hide();
+    $('#wishDiv').hide();
 
     $('#artistName').keyup(function(e){
         if(e.keyCode == 13) getArtists();

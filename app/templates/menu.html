@@ -5,7 +5,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="$('#searchDiv').show();$('#results').empty();">search</a>
+                    <a class="nav-link" href="#" onclick="$('#searchDiv').show();$('#favDiv').hide();$('#results').empty();">search</a>
                 </li>
 
                 {% if is_authenticated %}
@@ -16,8 +16,8 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" id="favLink" onclick="getFavs()"><i class="fas fa-heart"></i> fav</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-check-square"></i> <strike>shelf</strike></a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-list-alt"></i> <strike>wishlist</strike></a>
+                            <a class="dropdown-item" href="#" id="shelfLink" onclick="getShelf()"><i class="fas fa-check-square"></i> shelf</a>
+                            <a class="dropdown-item" href="#" id="wishLink" onclick="getWish()"><i class="fas fa-list-alt"></i> wishlist</a>
                             <a class="dropdown-item" href="#"><i class="fas fa-sliders-h"></i> <strike>settings</strike></a>
                             <a class="dropdown-item" href="#" id="logout"><i class="fas fa-sign-out-alt"></i> logout</a>
                         </div>

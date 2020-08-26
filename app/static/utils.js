@@ -273,6 +273,9 @@ function getCookie(name) {
 function getFavs(){
     loadingDiv(true, 'loadingDivBrowse');
     $('#searchDiv').hide();
+    $('#shelfDiv').hide();
+    $('#wishDiv').hide();
+    $('#favDiv').show();
     $("#results").empty();
     $.ajax({
         url: 'getFavs'
@@ -280,6 +283,56 @@ function getFavs(){
     .then(response => {
         if(response.length == 0){
             $("#results").append('No records marked as fav yet :(');
+        }
+        else{
+            $("#results").append("<tbody>")
+            $.each(response, (i, record) => {
+                $("#results").append('<tr><td><a href="#" onclick="setArtist('+record.artistId+');setRecord('+record.recordId+');">'+record.artist+' - '+record.title+'</a></td></tr>');
+            })
+            $("#results").append("</tbody>")
+        }
+        loadingDiv(false, 'loadingDivBrowse')
+    })
+}
+
+function getShelf(){
+    loadingDiv(true, 'loadingDivBrowse');
+    $('#searchDiv').hide();
+    $('#favDiv').hide();
+    $('#wishDiv').hide();
+    $('#shelfDiv').show();
+    $("#results").empty();
+    $.ajax({
+        url: 'getShelf'
+    })
+    .then(response => {
+        if(response.length == 0){
+            $("#results").append('No records on shelf yet :(');
+        }
+        else{
+            $("#results").append("<tbody>")
+            $.each(response, (i, record) => {
+                $("#results").append('<tr><td><a href="#" onclick="setArtist('+record.artistId+');setRecord('+record.recordId+');">'+record.artist+' - '+record.title+'</a></td></tr>');
+            })
+            $("#results").append("</tbody>")
+        }
+        loadingDiv(false, 'loadingDivBrowse')
+    })
+}
+
+function getWish(){
+    loadingDiv(true, 'loadingDivBrowse');
+    $('#searchDiv').hide();
+    $('#favDiv').hide();
+    $('#shelfDiv').hide();
+    $('#wishDiv').show();
+    $("#results").empty();
+    $.ajax({
+        url: 'getWish'
+    })
+    .then(response => {
+        if(response.length == 0){
+            $("#results").append('No records on wish list yet :(');
         }
         else{
             $("#results").append("<tbody>")
