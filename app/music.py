@@ -49,6 +49,7 @@ def get_record(id):
         mainRelease = masterRelease.main_release
 
         artist = mainRelease.artists[0].name
+        artistId = mainRelease.artists[0].id
         title = mainRelease.title
         year = mainRelease.year
         label = mainRelease.labels[0].name
@@ -62,6 +63,7 @@ def get_record(id):
 
         return {
             'artist': artist,
+            'artistId': artistId,
             'title': title,
             'year': year,
             'label': label,
@@ -75,6 +77,7 @@ def get_record(id):
     except HTTPError:
         return {
             'artist': 'not found',
+            'artistId': None,
             'title': 'not found',
             'year': 'not found',
             'label': 'not found',

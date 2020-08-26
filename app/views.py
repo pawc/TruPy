@@ -4,7 +4,7 @@ from .music import get_releases, get_record, get_artist, get_artists, get_releas
 from .models import FavRecord, ShelfRecord, WishRecord
 
 def index(request):
-    return render(request, 'releases.html', {
+    return render(request, 'index.html', {
         'username': request.user.username,
         'is_authenticated': request.user.is_authenticated
     })
@@ -146,3 +146,23 @@ def unwish(request):
         return response
     else:
         return Http404
+
+def getFavs(request):
+    response = HttpResponse()
+    if not request.user.is_authenticated:
+        response.status_code = 403
+        return response
+
+    favs = FavRecord.objects.filter(user=request.user)
+    results = []
+    for fav in favs:
+        record = get_record(fav.recordId)
+        results.append({
+            'recordId': fav.recordId,
+            'artist': record['artist'],
+            'artistId': record['artistId'],
+            'title': record['title']
+
+        })
+
+    return JsonResponse(results, safe=False)

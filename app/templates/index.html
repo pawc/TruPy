@@ -11,12 +11,49 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="{% static 'index.css' %}">
         <script src="https://kit.fontawesome.com/4d0e5d2f0b.js" crossorigin="anonymous"></script>
+        <script src="{% static 'utils.js' %}"></script>
         <script src="{% static 'index.js' %}"></script>
-        <title> {% block title %} {% endblock %} </title>
+        <title>TruPy</title>
     </head>
 
-    <body>
-        {% block menu %} {% endblock %}
-    </body>
-
 </html>
+
+<body>
+
+    <div class="contaienr-fluid">
+        {% include 'menu.html' %}
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-4 main-wrapper">
+                <div class="row" id="searchDiv">
+                    <input type="text" class="form-control" id="artistName" placeholder="search artist"/>
+                </div>
+                <div class="row alert alert-light" style="margin: auto; display: table;" role="alert" id="loadingDivBrowse">
+                    data loading ... &nbsp;
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                </div>
+
+                <div class="">
+                    <table class="table table-hover" id="results">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-4">
+                {% include 'artist.html' %}
+            </div>
+
+            <div class="col-4">
+                {% include 'record.html' %}
+            </div>
+
+        </div>
+    </div>
+
+</body>
