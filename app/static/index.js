@@ -119,6 +119,9 @@ function setRecord(id){
         }
     })
     .then(record => {
+
+        if(record.is_user_authenticated) $('#authControls').show()
+
         $('#recordTitle').text(record.title + ' (' + record.year + ') ')
         $('#recordLabel').text(record.label)
         $('#favIcon').attr('recordId', id)

@@ -19,7 +19,7 @@ from .views import log_in, log_out
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('trupy/', include('app.urls')),
+    path('', include('app.urls')),
     path('login/', log_in),
     path('logout/', log_out)
 ]

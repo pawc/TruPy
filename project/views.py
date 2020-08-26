@@ -8,8 +8,8 @@ def log_in(request):
     if user is not None:
         login(request, user)
 
-    return redirect('/trupy')
+    return redirect('/')
 
 def log_out(request):
     logout(request)
-    return redirect('/trupy')
+    return redirect('/')
