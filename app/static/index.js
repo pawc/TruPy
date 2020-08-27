@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+    $('#searchLink').click(() => {
+        $('#searchDiv').show();
+        $('#favDiv').hide();
+        $('#wishDiv').hide();
+        $('#shelfDiv').hide();
+        $('#results').empty();
+    })
+
     loadingDiv(false, 'loadingDivBrowse')
     loadingDiv(false, 'loadingDivArtist')
     loadingDiv(false, 'loadingDivRecord')
@@ -31,5 +39,9 @@ $(document).ready(function() {
     $('#favIcon').click(() => {toggleFav();})
     $('#wishIcon').click(() => {toggleWish();})
     $('#shelfIcon').click(() => {toggleShelf();})
+
+    $('#favLink').click(() => {getFavs();})
+    $('#wishLink').click(() => {getWish();})
+    $('#shelfLink').click(() => {getShelf();})
 
 });

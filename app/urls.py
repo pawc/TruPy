@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import index, getFavs, getShelf, getWish, getRecord, \
     getArtist, getArtists, getReleasesByArtistId, fav, unfav, \
-    shelf, unshelf, wish, unwish
+    shelf, unshelf, wish, unwish, users, getUsers
 
 urlpatterns = [
     path('', index),
@@ -18,4 +18,6 @@ urlpatterns = [
     path('unshelf/', unshelf),
     path('wish/', wish),
     path('unwish/', unwish),
+    path('users/', users),
+    path('getUsers/', getUsers)
 ]

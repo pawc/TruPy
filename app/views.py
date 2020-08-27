@@ -2,11 +2,21 @@ from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import render
 from .music import get_releases, get_record, get_artist, get_artists, get_releases_by_artistId
 from .models import FavRecord, ShelfRecord, WishRecord
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'index.html', {
         'username': request.user.username,
-        'is_authenticated': request.user.is_authenticated
+        'is_authenticated': request.user.is_authenticated,
+        'profile_controls_available': True
+    })
+
+def users(request):
+    return render(request, 'users.html', {
+        'username': request.user.username,
+        'is_authenticated': request.user.is_authenticated,
+        'profile_controls_available': False
     })
 
 def getReleases(request):
@@ -51,15 +61,11 @@ def getArtist(request):
     artist = get_artist(id)
     return JsonResponse(artist, safe=False)
 
+@login_required
 def fav(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-
-        if not request.user.is_authenticated:
-            response.status_code = 403
-            return response
-
         if len(FavRecord.objects.filter(recordId=id, user=request.user)) == 0:
             FavRecord.objects.create(recordId=id, user=request.user)
         response.status_code = 200
@@ -67,15 +73,11 @@ def fav(request):
     else:
         return Http404
 
+@login_required
 def unfav(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-
-        if not request.user.is_authenticated:
-            response.status_code = 403
-            return response
-
         record = FavRecord.objects.filter(recordId=id, user=request.user)
         record.delete()
         response.status_code = 200
@@ -83,15 +85,11 @@ def unfav(request):
     else:
         return Http404
 
+@login_required
 def shelf(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-
-        if not request.user.is_authenticated:
-            response.status_code = 403
-            return response
-
         if len(ShelfRecord.objects.filter(recordId=id, user=request.user)) == 0:
             ShelfRecord.objects.create(recordId=id, user=request.user)
         response.status_code = 200
@@ -99,15 +97,11 @@ def shelf(request):
     else:
         return Http404
 
+@login_required
 def unshelf(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-
-        if not request.user.is_authenticated:
-            response.status_code = 403
-            return response
-
         record = ShelfRecord.objects.filter(recordId=id, user=request.user)
         record.delete()
         response.status_code = 200
@@ -115,14 +109,11 @@ def unshelf(request):
     else:
         return Http404
 
+@login_required
 def wish(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-
-        if not request.user.is_authenticated:
-            response.status_code = 403
-            return response
 
         if len(WishRecord.objects.filter(recordId=id, user=request.user)) == 0:
             WishRecord.objects.create(recordId=id, user=request.user)
@@ -131,14 +122,11 @@ def wish(request):
     else:
         return Http404
 
+@login_required
 def unwish(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         response = HttpResponse()
-
-        if not request.user.is_authenticated:
-            response.status_code = 403
-            return response
 
         record = WishRecord.objects.filter(recordId=id, user=request.user)
         record.delete()
@@ -147,12 +135,8 @@ def unwish(request):
     else:
         return Http404
 
+@login_required
 def getFavs(request):
-    response = HttpResponse()
-    if not request.user.is_authenticated:
-        response.status_code = 403
-        return response
-
     favs = FavRecord.objects.filter(user=request.user)
     results = []
     for fav in favs:
@@ -166,12 +150,8 @@ def getFavs(request):
 
     return JsonResponse(results, safe=False)
 
+@login_required
 def getShelf(request):
-    response = HttpResponse()
-    if not request.user.is_authenticated:
-        response.status_code = 403
-        return response
-
     shelf = ShelfRecord.objects.filter(user=request.user)
     results = []
     for s in shelf:
@@ -185,12 +165,8 @@ def getShelf(request):
 
     return JsonResponse(results, safe=False)
 
+@login_required
 def getWish(request):
-    response = HttpResponse()
-    if not request.user.is_authenticated:
-        response.status_code = 403
-        return response
-
     wishes = WishRecord.objects.filter(user=request.user)
     results = []
     for wish in wishes:
@@ -200,6 +176,17 @@ def getWish(request):
             'artist': record['artist'],
             'artistId': record['artistId'],
             'title': record['title']
+        })
+
+    return JsonResponse(results, safe=False)
+
+@login_required
+def getUsers(request):
+    users = User.objects.all()
+    results = []
+    for user in users:
+        results.append({
+            'name': user.username
         })
 
     return JsonResponse(results, safe=False)
