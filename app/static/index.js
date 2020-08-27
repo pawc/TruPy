@@ -32,10 +32,6 @@ $(document).ready(function() {
         })
     })
 
-    chooseArtist(1439605)
-    setArtist(1439605)
-    setRecord(670664)
-
     $('#favIcon').click(() => {toggleFav();})
     $('#wishIcon').click(() => {toggleWish();})
     $('#shelfIcon').click(() => {toggleShelf();})
@@ -43,5 +39,9 @@ $(document).ready(function() {
     $('#favLink').click(() => {getFavs();})
     $('#wishLink').click(() => {getWish();})
     $('#shelfLink').click(() => {getShelf();})
+
+    chooseArtist(1439605)
+    setArtist(1439605)
+    setRecord(670664)
 
 });
