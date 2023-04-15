@@ -1,7 +1,7 @@
 import discogs_client
 import config
 from discogs_client.exceptions import HTTPError
-
+#marc
 def get_releases(artist):
     releases = []
 
